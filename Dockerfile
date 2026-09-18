@@ -10,7 +10,9 @@ RUN docker-php-ext-install \
     pdo \
     pdo_mysql
 
-RUN a2enmod rewrite
+RUN a2enmod rewrite \
+    && printf '%s\n' 'ServerName localhost' > /etc/apache2/conf-available/servername.conf \
+    && a2enconf servername
 
 WORKDIR /var/www/html
 

@@ -11,9 +11,10 @@ services:
       - ./htdocs:/var/www/html
       - sessions_data:/var/www/html/cbt2.6admin/application/cache/sessions
       - client_sessions_data:/var/www/html/cbt2.6client/application/cache/sessions
-    command: sh -c "chown -R www-data:www-data /var/www/html/cbt2.6admin/application/cache/sessions /var/www/html/cbt2.6client/application/cache/sessions && exec apache2-foreground"
+    command: sh -c "mkdir -p /var/www/html/cbt2.6client/application/cache/sessions && chown -R www-data:www-data /var/www/html/cbt2.6client/application/cache/sessions && chmod 775 /var/www/html/cbt2.6client/application/cache/sessions && exec apache2-foreground"
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     restart: unless-stopped
 
   mariadb:
@@ -29,6 +30,12 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql
       - ./htdocs/cbt2.6admin/Databases/cbt25.sql:/docker-entrypoint-initdb.d/01-cbt25.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u root -proot --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
     restart: unless-stopped
     
 
