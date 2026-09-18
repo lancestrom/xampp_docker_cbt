@@ -227,7 +227,7 @@ class Dashboard_tkj extends MY_Controller
 
         $data = array(
             'id_jadwal_soal' => $id_jadwal_soal,
-            'id_jadwal ' => $id_jadwal,
+            'id_jadwal' => $id_jadwal,
             'id_bank_soal' => $id_bank_soal
         );
 

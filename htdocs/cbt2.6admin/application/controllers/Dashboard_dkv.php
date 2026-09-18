@@ -228,7 +228,7 @@ class Dashboard_dkv extends MY_Controller
 
         $data = array(
             'id_jadwal_soal' => $id_jadwal_soal,
-            'id_jadwal ' => $id_jadwal,
+            'id_jadwal' => $id_jadwal,
             'id_bank_soal' => $id_bank_soal
         );
 

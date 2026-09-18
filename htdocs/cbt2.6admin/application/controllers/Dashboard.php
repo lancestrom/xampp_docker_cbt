@@ -40,9 +40,9 @@ class Dashboard extends MY_Controller
         $this->db->query('UPDATE token_masuk SET token_expired_at = DATE_ADD(NOW(), INTERVAL 15 MINUTE) WHERE token_expired_at IS NULL');
         $isi['token'] = $this->Model_token->dataToken();
         $isi['token_masuk'] = $this->db
-    	->select('token_masuk.*, GREATEST(0, TIMESTAMPDIFF(SECOND, NOW(), token_expired_at)) AS remaining_seconds', false)
-    	->get('token_masuk')
-   	    ->result_array();
+            ->select('token_masuk.*, GREATEST(0, TIMESTAMPDIFF(SECOND, NOW(), token_expired_at)) AS remaining_seconds', false)
+            ->get('token_masuk')
+            ->result_array();
         $isi2['title'] = 'CBT | Administrator';
         $isi['content'] = 'tampilan_token';
         $this->load->view('templates/header', $isi2);
@@ -86,27 +86,27 @@ class Dashboard extends MY_Controller
         $this->db->update('token_keluar', $data);
         redirect('Dashboard/token');
     }
-   public function refresh_token_masuk()
-{
-    $this->require_login();
+    public function refresh_token_masuk()
+    {
+        $this->require_login();
 
-    $id = $this->input->post('id');
+        $id = $this->input->post('id');
 
-    $token_baru = 'CBT' . rand(1111, 9999);
+        $token_baru = 'CBT' . rand(1111, 9999);
 
-    $this->db->set('token_masuk', $token_baru);
+        $this->db->set('token_masuk', $token_baru);
 
-    $this->db->set(
-        'token_expired_at',
-        'DATE_ADD(NOW(), INTERVAL 15 MINUTE)',
-        false
-    );
+        $this->db->set(
+            'token_expired_at',
+            'DATE_ADD(NOW(), INTERVAL 15 MINUTE)',
+            false
+        );
 
-    $this->db->where('id', $id);
-    $this->db->update('token_masuk');
+        $this->db->where('id', $id);
+        $this->db->update('token_masuk');
 
-    redirect('Dashboard/token');
-}
+        redirect('Dashboard/token');
+    }
     public function jurusan()
     {
         $this->require_login();
@@ -476,7 +476,7 @@ class Dashboard extends MY_Controller
         $id_bank_soal = $this->input->post_get('id_bank_soal');
         $data = array(
             'id_jadwal_soal' => $id_jadwal_soal,
-            'id_jadwal ' => $id_jadwal,
+            'id_jadwal' => $id_jadwal,
             'id_bank_soal' => $id_bank_soal
         );
         $this->db->insert('jadwal_soal', $data);
