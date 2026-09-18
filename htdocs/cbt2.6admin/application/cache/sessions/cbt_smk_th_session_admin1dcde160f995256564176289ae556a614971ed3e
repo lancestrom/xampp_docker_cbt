@@ -1,0 +1,9 @@
+__ci_last_regenerate|i:1789736765;username|s:9:"K01030098";session_id|s:64:"6030c94885b7412770548c976abc4ebc6cc7dc14a9b9a96f9c50033e7f37b01c";logged_in|b:1;level|s:5:"admin";pesan|s:434:"<div class="row">
+        <div class="col-md mt-2">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Data Mapel Ujian Berhasil Di Upload</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>        </div>
+        </div>";__ci_vars|a:1:{s:5:"pesan";s:3:"old";}
