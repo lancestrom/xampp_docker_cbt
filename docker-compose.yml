@@ -1,0 +1,45 @@
+services:
+
+  apache:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php74-apache
+    ports:
+      - "80:80"
+    volumes:
+      - ./htdocs:/var/www/html
+    depends_on:
+      - mariadb
+    restart: unless-stopped
+
+  mariadb:
+    image: mariadb:10.4
+    container_name: mariadb104
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cbt25
+      MYSQL_USER: cbt
+      MYSQL_PASSWORD: smktkjTH46
+    ports:
+      - "3307:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./htdocs/cbt2.6admin/Databases/cbt25.sql:/docker-entrypoint-initdb.d/01-cbt25.sql:ro
+    restart: unless-stopped
+    
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+    depends_on:
+      - mariadb
+    restart: unless-stopped
+
+volumes:
+  mariadb_data:
