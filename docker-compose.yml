@@ -9,6 +9,8 @@ services:
       - "80:80"
     volumes:
       - ./htdocs:/var/www/html
+      - sessions_data:/var/www/html/cbt2.6admin/application/cache/sessions
+    command: sh -c "chown -R www-data:www-data /var/www/html/cbt2.6admin/application/cache/sessions && exec apache2-foreground"
     depends_on:
       - mariadb
     restart: unless-stopped
@@ -43,3 +45,4 @@ services:
 
 volumes:
   mariadb_data:
+  sessions_data:
