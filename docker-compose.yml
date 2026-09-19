@@ -11,7 +11,7 @@ services:
       - ./htdocs:/var/www/html
       - sessions_data:/var/www/html/cbt2.6admin/application/cache/sessions
       - client_sessions_data:/var/www/html/cbt2.6client/application/cache/sessions
-    command: sh -c "mkdir -p /var/www/html/cbt2.6client/application/cache/sessions && chown -R www-data:www-data /var/www/html/cbt2.6client/application/cache/sessions && chmod 775 /var/www/html/cbt2.6client/application/cache/sessions && exec apache2-foreground"
+    command: sh -c "mkdir -p /var/www/html/cbt2.6admin/application/cache/sessions /var/www/html/cbt2.6client/application/cache/sessions && chown -R www-data:www-data /var/www/html/cbt2.6admin/application/cache/sessions /var/www/html/cbt2.6client/application/cache/sessions && chmod 775 /var/www/html/cbt2.6admin/application/cache/sessions /var/www/html/cbt2.6client/application/cache/sessions && exec apache2-foreground"
     depends_on:
       mariadb:
         condition: service_healthy
@@ -48,7 +48,8 @@ services:
       PMA_HOST: mariadb
       PMA_PORT: 3306
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     restart: unless-stopped
 
 volumes:
