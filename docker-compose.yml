@@ -1,17 +1,17 @@
 services:
-
-  apache:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: php74-apache
+  wordpress:
+    image: wordpress:php8.5-apache
+    container_name: wordpress85
     ports:
       - "8123:80"
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_NAME: project
+      WORDPRESS_DB_USER: dukevii
+      WORDPRESS_DB_PASSWORD: "Dika12345@"
     volumes:
-      - ./htdocs:/var/www/html
-    #   - sessions_data:/var/www/html/cbt2.6admin/application/cache/sessions
-    #   - client_sessions_data:/var/www/html/cbt2.6client/application/cache/sessions
-    # command: sh -c "mkdir -p /var/www/html/cbt2.6admin/application/cache/sessions /var/www/html/cbt2.6client/application/cache/sessions && chown -R www-data:www-data /var/www/html/cbt2.6admin/application/cache/sessions /var/www/html/cbt2.6client/application/cache/sessions && chmod 775 /var/www/html/cbt2.6admin/application/cache/sessions /var/www/html/cbt2.6client/application/cache/sessions && exec apache2-foreground"
+      - wordpress_data:/var/www/html
+      - ./htdocs/wp-bkk/wp-content/themes/Mentor:/var/www/html/wp-content/themes/Mentor
     depends_on:
       mariadb:
         condition: service_healthy
@@ -29,15 +29,14 @@ services:
       - "3307:3306"
     volumes:
       - mariadb_data:/var/lib/mysql
-      # - ./htdocs/cbt2.6admin/Databases/cbt25.sql:/docker-entrypoint-initdb.d/01-cbt25.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u root -proot --silent"]
+      test:
+        ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u root -proot --silent"]
       interval: 5s
       timeout: 5s
       retries: 20
       start_period: 10s
     restart: unless-stopped
-    
 
   phpmyadmin:
     image: phpmyadmin:latest
@@ -54,5 +53,6 @@ services:
 
 volumes:
   mariadb_data:
+  wordpress_data:
   sessions_data:
   client_sessions_data:

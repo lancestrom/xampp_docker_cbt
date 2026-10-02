@@ -1,4 +1,4 @@
-FROM php:7.4.30-apache-bullseye
+FROM php:8.5-apache-bullseye
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libzip-dev \
