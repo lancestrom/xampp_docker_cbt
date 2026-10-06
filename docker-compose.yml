@@ -11,7 +11,7 @@ services:
       WORDPRESS_DB_PASSWORD: "Dika12345@"
     volumes:
       - wordpress_data:/var/www/html
-      - ./htdocs/wp-bkk/wp-content/themes/Mentor:/var/www/html/wp-content/themes/Mentor
+      # - ./htdocs/wp-bkk/wp-content/themes/Mentor:/var/www/html/wp-content/themes/Mentor
     depends_on:
       mariadb:
         condition: service_healthy
